@@ -1,15 +1,21 @@
-# Password Manager
-## Установка словаря паролей
+# 🔐 Password Strength Checker
 
-Для работы программы необходим файл словаря `rockyou_simpl_passw.txt`.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python">
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen.svg" alt="Status">
+</p>
 
-### Автоматическая загрузка (рекомендуется)
+---
 
-Выполните команду в терминале из корневой папки проекта:
+## 📥 Установка словаря паролей
 
-```bash
-# Создать папку data, если её нет
-mkdir -p data
+Для работы программы необходим файл словаря <code style="color: #f39c12;">rockyou_simpl_passw.txt</code>.
 
-# Скачать файл по ссылке
-curl -L -o data/rockyou_simpl_passw.txt https://github.com/josuamarcelc/common-password-list/raw/refs/heads/main/rockyou_2025_05.txt
+### 🤖 Автоматическая загрузка
+
+<details>
+<summary><b style="color: #3498db;">🪟 Windows (PowerShell)</b></summary>
+
+```powershell
+New-Item -ItemType Directory -Force -Path data; Invoke-WebRequest -Uri "https://github.com/josuamarcelc/common-password-list/raw/refs/heads/main/rockyou_2025_05.txt" -OutFile "data/rockyou_simpl_passw.txt"
