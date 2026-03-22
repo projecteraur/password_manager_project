@@ -1,4 +1,4 @@
-# ℹ Password Manager Guide
+# ⠀⠀⠀⠀⠀ℹ Password Manager Guide
 
 ## ⬇ Установка и запуск программы
 1. Скачайте папку `main project` и разорхивируйте ее в одноименную папку
