@@ -33,8 +33,7 @@ wget -O data/rockyou_simpl_passw.txt https://github.com/josuamarcelc/common-pass
 
 ## ✋ Ручная загрузка
 
-1. Скачайте фаил по ссылке ниже:
-- https://github.com/josuamarcelc/common-password-list/raw/refs/heads/main/rockyou_2025_05.txt
+1. Скачайте фаил по ссылке: [rockyou_2025_05.txt](https://github.com/josuamarcelc/common-password-list/raw/refs/heads/main/rockyou_2025_05.txt)
 
 3. Переименуйте скачанный фаил в `rockyou_simpl_passw.txt`
 
