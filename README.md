@@ -1,4 +1,4 @@
-# ⠀⠀⠀⠀⠀⠀⠀⠀⠀**⠀ℹ Password Manager Guide**
+# ⠀⠀⠀⠀⠀⠀⠀⠀⠀**⠀ Password Manager Guide**
 
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀![Превью программы](https://github.com/projecteraur/password_manager_project/blob/main/others/preview1.png?raw=true)
 
