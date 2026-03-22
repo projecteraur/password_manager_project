@@ -1,5 +1,4 @@
-# Password Strength Checker
-
+# Password Manager
 ## Установка словаря паролей
 
 Для работы программы необходим файл словаря `rockyou_simpl_passw.txt`.
