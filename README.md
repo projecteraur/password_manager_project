@@ -1,13 +1,35 @@
-# Password Strength Checker
+# Password Manager
 
-## <span style="color: #3498db;">Установка словаря паролей</span>
+
+
+## Установка словаря паролей
+
+
 
 Для работы программы необходим файл словаря `rockyou_simpl_passw.txt`.
 
-### <span style="color: #2ecc71;">Автоматическая загрузка (рекомендуется)</span>
+
+
+### Автоматическая загрузка (рекомендуется)
+
+
 
 Выполните команду в терминале из корневой папки проекта:
 
-**<span style="color: #e67e22;">Windows (PowerShell):</span>**
-```powershell
-New-Item -ItemType Directory -Force -Path data; Invoke-WebRequest -Uri "https://github.com/josuamarcelc/common-password-list/raw/refs/heads/main/rockyou_2025_05.txt" -OutFile "data/rockyou_simpl_passw.txt"
+
+
+mkdir -p data
+
+wget -O data/rockyou_simpl_passw.txt https://github.com/josuamarcelc/common-password-list/raw/refs/heads/main/rockyou_2025_05.txt
+
+
+
+### Ручная
+
+1. Скачайте фаил по ссылке
+
+- https://github.com/josuamarcelc/common-password-list/raw/refs/heads/main/rockyou_2025_05.txt
+
+2. Переименуйте скаченный фаил в `rockyou_simpl_passw.txt`
+
+3. Переместите данный фаил в папку main_project/data/
