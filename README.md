@@ -1,6 +1,6 @@
 # ℹ️ **Password Manager Guide**
 
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀![Превью программы](https://github.com/projecteraur/password_manager_project/blob/main/others/preview1.png?raw=true)
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀![Превью программы](https://github.com/projecteraur/password_manager_project/blob/main/others/pre.png?raw=true)
 
 ## ⬇️ Установка и запуск программы
 1. **Установите Python:** Если он не установлен, скачайте его с [официального сайта](https://www.python.org/)
