@@ -156,14 +156,14 @@ class PasswordCheck:
         else:
             print(f"{Fore.GREEN}✅ Длина: отличная ({length} симв.){Style.RESET_ALL}")
         
-        # Проверка энтропии
+
         entropy = self.coutentropy(password)
         entropy_level, entropy_color, entropy_comment = self.evaluateent(entropy)
         
         print(f"{entropy_color}🔢 Энтропия: {entropy:.2f} бит - {entropy_level.upper()}{Style.RESET_ALL}")
         print(f"{entropy_color}💡 {entropy_comment}{Style.RESET_ALL}")
         
-        # Проверка категорий символов
+
         lower = bool(re.search(r'[a-z]', password))
         upper = bool(re.search(r'[A-Z]', password))
         digit = bool(re.search(r'\d', password))
@@ -177,11 +177,11 @@ class PasswordCheck:
         print(f"  {Fore.GREEN if digit else Fore.RED}•{Fore.WHITE} Цифры: {'✓' if digit else '✗'}{Style.RESET_ALL}")
         print(f"  {Fore.GREEN if specialsimb else Fore.RED}•{Fore.WHITE} Спецсимволы: {'✓' if specialsimb else '✗'}{Style.RESET_ALL}")
         
-        # Проверка шаблонов
+        
         if re.search(r'(.)\1{2,}', password):
             print(f"{Fore.YELLOW}⚠️  Обнаружены повторяющиеся символы{Style.RESET_ALL}")
         
-        # Оценка энтропии
+        
         if entropy < 72:
             return "слабый"
         elif entropy < 75:
@@ -208,12 +208,12 @@ def get_password_strength_fast(password: str) -> tuple:
         Кортеж (уровень надежности, цвет)
         Уровень: "слабый", "средний" или "надежный"
     """
-    # Проверяем длину
+
     length = len(password)
     if length < 8:
         return "слабый", Fore.RED
     
-    # Быстрая проверка категорий символов
+
     has_lower = any(c.islower() for c in password)
     has_upper = any(c.isupper() for c in password)
     has_digit = any(c.isdigit() for c in password)
@@ -224,7 +224,7 @@ def get_password_strength_fast(password: str) -> tuple:
     if categories < 3:
         return "слабый", Fore.RED
     
-    # Быстрая оценка энтропии
+
     char_variety = 0
     if has_lower:
         char_variety += 26
@@ -233,7 +233,7 @@ def get_password_strength_fast(password: str) -> tuple:
     if has_digit:
         char_variety += 10
     if has_special:
-        char_variety += 20  # приблизительно
+        char_variety += 20  
     
     entropy = length * math.log2(char_variety) if char_variety > 0 else 0
     

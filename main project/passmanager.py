@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from colorama import Fore, Style
 
-# Импортируем общие утилиты
+
 from password_utils import get_password_strength_fast
 
 
@@ -143,7 +143,7 @@ def find_password_by_query(password_file: Path):
         print()
         
         for i, entry in enumerate(found_passwords, 1):
-            # Форматируем строку с зелеными разделителями
+            
             password_part = f"pass: {entry['password']}"
             note_part = f"note: {entry['note']}"
             date_part = entry['date'][:10] if len(entry['date']) >= 10 else entry['date']
@@ -167,11 +167,11 @@ def show_file_directory(password_file: Path):
     print(f"{Fore.MAGENTA}───────────────────────────────────────{Style.RESET_ALL}")
     
     if password_file.exists():
-        # Получаем абсолютный путь
+        
         abs_path = password_file.absolute()
-        # Получаем директорию
+        
         directory = abs_path.parent
-        # Получаем размер файла
+        
         file_size = password_file.stat().st_size
         
         print(f"{Fore.GREEN}📄 Имя файла: {Style.RESET_ALL}{password_file.name}")
@@ -179,7 +179,7 @@ def show_file_directory(password_file: Path):
         print(f"{Fore.GREEN}📂 Директория: {Style.RESET_ALL}{directory}")
         print(f"{Fore.GREEN}📊 Размер файла: {Style.RESET_ALL}{file_size} байт")
         
-        # Показываем информацию о файле
+        
         try:
             stat_info = password_file.stat()
             created_time = datetime.fromtimestamp(stat_info.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
@@ -190,7 +190,7 @@ def show_file_directory(password_file: Path):
         except:
             pass
         
-        # Показываем содержимое директории
+        
         print(f"\n{Fore.CYAN}📋 Содержимое директории:{Style.RESET_ALL}")
         try:
             files = list(directory.iterdir())
@@ -224,43 +224,43 @@ def display_first_n_passwords(password_file: Path):
         return
     
     try:
-        # Бесконечный цикл для запроса числа
+        
         while True:
-            # Запрашиваем количество записей
+            
             n_str = input(f"{Fore.YELLOW}Введите количество записей для вывода (Enter/0 - отмена): {Style.RESET_ALL}").strip()
             
-            # Проверяем отмену по Enter (пустая строка)
+            
             if not n_str:
                 print(f"{Fore.RED}❌ Операция отменена{Style.RESET_ALL}")
                 input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
                 return
             
-            # Проверяем, что ввод состоит только из цифр
+            
             if not n_str.isdigit():
                 print(f"{Fore.RED}❌ Введите корректное число!{Style.RESET_ALL}")
                 continue
             
             n = int(n_str)
             
-            # Проверяем отмену операции
+            
             if n == 0:
                 print(f"{Fore.RED}❌ Операция отменена{Style.RESET_ALL}")
                 input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
                 return
             
-            # Проверяем, что число больше 0
+            
             if n < 0:
                 print(f"{Fore.RED}❌ Число должно быть больше 0!{Style.RESET_ALL}")
                 continue
             
-            # Если все проверки пройдены, выходим из цикла
+            
             break
         
-        # Читаем файл построчно
+        
         with open(password_file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
 
-        # Фильтруем непустые строки
+        
         non_empty_lines = [line.strip() for line in lines if line.strip()]
         
         total_records = len(non_empty_lines)
@@ -270,7 +270,7 @@ def display_first_n_passwords(password_file: Path):
             input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
             return
         
-        # Проверяем, не запрошено ли больше, чем есть
+        
         if n > total_records:
             print(f"{Fore.YELLOW}⚠️ В файле всего {total_records} записей. Будет выведено {total_records} записей.{Style.RESET_ALL}")
             n = total_records
@@ -278,11 +278,11 @@ def display_first_n_passwords(password_file: Path):
         print(f"\n{Fore.GREEN}📊 Вывод первых {n} записей из {total_records}:{Style.RESET_ALL}")
         print()
 
-        # Выводим первые n записей
+        
         for i in range(n):
             line = non_empty_lines[i]
             
-            # Парсим строку и переформатируем с зелеными разделителями
+            
             match = re.match(r'pass:\s*([^|]+)\s*\|\s*note:\s*([^|]+)\s*\|\s*date:\s*(.+)', line)
             if match:
                 password = match.group(1).strip()
@@ -290,14 +290,14 @@ def display_first_n_passwords(password_file: Path):
                 date_str = match.group(3).strip()
                 date_only = date_str[:10] if len(date_str) >= 10 else date_str
                 
-                # Форматируем с зелеными разделителями
+                
                 password_part = f"pass: {password}"
                 note_part = f"note: {note}"
                 
                 formatted_line = f"{password_part} {Fore.GREEN}|{Style.RESET_ALL} {note_part} {Fore.GREEN}|{Style.RESET_ALL} date: {date_only}"
                 print(f"{Fore.CYAN}{i+1:2d}.{Style.RESET_ALL} {formatted_line}")
             else:
-                # Если строка не соответствует формату, выводим как есть
+                
                 print(f"{Fore.CYAN}{i+1:2d}.{Style.RESET_ALL} {line}")
                 
     except Exception as e:
@@ -322,43 +322,43 @@ def display_last_n_passwords(password_file: Path):
         return
     
     try:
-        # Бесконечный цикл для запроса числа
+        
         while True:
-            # Запрашиваем количество записей
+            
             n_str = input(f"{Fore.YELLOW}Введите количество записей для вывода (Enter/0 - отмена): {Style.RESET_ALL}").strip()
             
-            # Проверяем отмену по Enter (пустая строка)
+            
             if not n_str:
                 print(f"{Fore.RED}❌ Операция отменена{Style.RESET_ALL}")
                 input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
                 return
             
-            # Проверяем, что ввод состоит только из цифр
+            
             if not n_str.isdigit():
                 print(f"{Fore.RED}❌ Введите корректное число!{Style.RESET_ALL}")
                 continue
             
             n = int(n_str)
             
-            # Проверяем отмену операции
+            
             if n == 0:
                 print(f"{Fore.RED}❌ Операция отменена{Style.RESET_ALL}")
                 input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
                 return
             
-            # Проверяем, что число больше 0
+            
             if n < 0:
                 print(f"{Fore.RED}❌ Число должно быть больше 0!{Style.RESET_ALL}")
                 continue
             
-            # Если все проверки пройдены, выходим из цикла
+            
             break
         
-        # Читаем файл построчно
+        
         with open(password_file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
 
-        # Фильтруем непустые строки
+        
         non_empty_lines = [line.strip() for line in lines if line.strip()]
         
         total_records = len(non_empty_lines)
@@ -368,7 +368,7 @@ def display_last_n_passwords(password_file: Path):
             input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
             return
         
-        # Проверяем, не запрошено ли больше, чем есть
+        
         if n > total_records:
             print(f"{Fore.YELLOW}⚠️ В файле всего {total_records} записей. Будет выведено {total_records} записей.{Style.RESET_ALL}")
             n = total_records
@@ -376,14 +376,14 @@ def display_last_n_passwords(password_file: Path):
         print(f"\n{Fore.GREEN}📊 Вывод последних {n} записей из {total_records}:{Style.RESET_ALL}")
         print()
 
-        # Выводим последние n записей в правильном порядке
+        
         start_index = total_records - n
         
         for i in range(n):
             line_index = start_index + i
             line = non_empty_lines[line_index]
             
-            # Парсим строку и переформатируем с зелеными разделителями
+            
             match = re.match(r'pass:\s*([^|]+)\s*\|\s*note:\s*([^|]+)\s*\|\s*date:\s*(.+)', line)
             if match:
                 password = match.group(1).strip()
@@ -391,15 +391,15 @@ def display_last_n_passwords(password_file: Path):
                 date_str = match.group(3).strip()
                 date_only = date_str[:10] if len(date_str) >= 10 else date_str
                 
-                # Форматируем с зелеными разделителями
+                
                 password_part = f"pass: {password}"
                 note_part = f"note: {note}"
                 
                 formatted_line = f"{password_part} {Fore.GREEN}|{Style.RESET_ALL} {note_part} {Fore.GREEN}|{Style.RESET_ALL} date: {date_only}"
-                # Нумерация с правильного номера (не с 1, а с start_index + 1)
+                
                 print(f"{Fore.CYAN}{line_index + 1:2d}.{Style.RESET_ALL} {formatted_line}")
             else:
-                # Если строка не соответствует формату, выводим как есть
+                
                 print(f"{Fore.CYAN}{line_index + 1:2d}.{Style.RESET_ALL} {line}")
                 
     except Exception as e:
@@ -424,17 +424,17 @@ def display_all_passwords(password_file: Path):
         return
     
     try:
-        # Читаем файл построчно
+        
         with open(password_file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
 
-        # Сначала считаем количество непустых строк
+        
         count = 0
         for line in lines:
             if line.strip():
                 count += 1
 
-        # Выводим результат
+        
         print(f"{Fore.GREEN}📊 Всего записей: {Style.RESET_ALL}", count)
         print()
 
@@ -442,7 +442,7 @@ def display_all_passwords(password_file: Path):
         for line in lines:
             line = line.strip()
             if line:
-                # Парсим строку и переформатируем с зелеными разделителями
+                
                 match = re.match(r'pass:\s*([^|]+)\s*\|\s*note:\s*([^|]+)\s*\|\s*date:\s*(.+)', line)
                 if match:
                     password = match.group(1).strip()
@@ -450,14 +450,14 @@ def display_all_passwords(password_file: Path):
                     date_str = match.group(3).strip()
                     date_only = date_str[:10] if len(date_str) >= 10 else date_str
                     
-                    # Форматируем с зелеными разделителями
+                    
                     password_part = f"pass: {password}"
                     note_part = f"note: {note}"
                     
                     formatted_line = f"{password_part} {Fore.GREEN}|{Style.RESET_ALL} {note_part} {Fore.GREEN}|{Style.RESET_ALL} date: {date_only}"
                     print(f"{Fore.CYAN}{line_number:2d}.{Style.RESET_ALL} {formatted_line}")
                 else:
-                    # Если строка не соответствует формату, выводим как есть
+                    
                     print(f"{Fore.CYAN}{line_number:2d}.{Style.RESET_ALL} {line}")
                 
                 line_number += 1
@@ -484,33 +484,33 @@ def create_backup(password_file: Path, backup_dir: Path):
         input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
         return
     
-    # Создаем директорию для бэкапов если её нет
+    
     backup_dir.mkdir(exist_ok=True)
     
     try:
         while True:
-            # Получаем список существующих бэкапов (обновляем каждый цикл)
+            
             backup_files = []
             if backup_dir.exists():
                 for f in backup_dir.iterdir():
                     if f.is_file():
-                        # Нормализуем имя файла для поиска ключевых слов
+                        
                         normalized_name = f.name.lower()
                         
-                        # Удаляем цифры и специальные символы для лучшего сопоставления
-                        clean_name = re.sub(r'[0-9_\-\.]', ' ', normalized_name)
-                        clean_name = ' '.join(clean_name.split())  # Удаляем лишние пробелы
                         
-                        # Ищем файлы, содержащие ключевые слова (игнорируя цифры и небольшие различия)
+                        clean_name = re.sub(r'[0-9_\-\.]', ' ', normalized_name)
+                        clean_name = ' '.join(clean_name.split())  
+                        
+                        
                         keywords = [
                             'backup', 'urpasswordswishi', 'cleanup', 'clean', 
                             'replacement', 'replace', 'before', 'after'
                         ]
                         
-                        # Проверяем, содержит ли очищенное имя файла любой из ключевых слов
+                        
                         is_backup_file = any(keyword in clean_name for keyword in keywords)
                         
-                        # Также проверяем оригинальное имя (на случай если цифры были частью слова)
+                        
                         is_backup_file = is_backup_file or any(keyword in normalized_name for keyword in keywords)
                         
                         if is_backup_file:
@@ -521,18 +521,18 @@ def create_backup(password_file: Path, backup_dir: Path):
                                 'path': f,
                                 'size': f_size,
                                 'time': f_time,
-                                'clean_name': clean_name  # Сохраняем для отладки
+                                'clean_name': clean_name  
                             })
             
-            # Сортируем по времени создания (новые сверху)
+            
             backup_files.sort(key=lambda x: x['time'], reverse=True)
             
-            # Показываем информацию о копиях
+            
             if backup_files:
                 print(f"{Fore.YELLOW}⚠️ У вас есть {len(backup_files)} резервных копий:{Style.RESET_ALL}")
                 print()
                 
-                for i, bf in enumerate(backup_files[:5]):  # Показываем только последние 5
+                for i, bf in enumerate(backup_files[:5]):  
                     size_kb = bf['size'] / 1024
                     time_str = datetime.fromtimestamp(bf['time']).strftime('%Y-%m-%d %H:%M:%S')
                     print(f"  {Fore.CYAN}{i+1}.{Style.RESET_ALL} {bf['name']}")
@@ -551,7 +551,7 @@ def create_backup(password_file: Path, backup_dir: Path):
                 action_choice = input(f"\n{Fore.CYAN}Выберите действие (0-1; Enter - отмена): {Style.RESET_ALL}").strip()
                 
                 if action_choice == "0":
-                    # Удаление копии
+                    
                     if not backup_files:
                         print(f"{Fore.RED}❌ У вас нет резервных копий для удаления!{Style.RESET_ALL}")
                         input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
@@ -561,12 +561,12 @@ def create_backup(password_file: Path, backup_dir: Path):
                         continue
                     
                     if len(backup_files) == 1:
-                        # Если только одна копия, удаляем ее
+                        
                         backup_to_delete = backup_files[0]
                     else:
-                        # Если несколько копий, спрашиваем какую удалить
+                        
                         print(f"\n{Fore.CYAN}Какую копию удалить?{Style.RESET_ALL}")
-                        for i, bf in enumerate(backup_files[:10]):  # Показываем до 10 копий
+                        for i, bf in enumerate(backup_files[:10]):  
                             size_kb = bf['size'] / 1024
                             time_str = datetime.fromtimestamp(bf['time']).strftime('%Y-%m-%d %H:%M:%S')
                             print(f"  {Fore.YELLOW}{i}{Style.RESET_ALL} - {bf['name']} ({Fore.GREEN}{size_kb:.1f} KB, {time_str}{Style.RESET_ALL})")
@@ -590,7 +590,7 @@ def create_backup(password_file: Path, backup_dir: Path):
                             print(f"{Fore.MAGENTA}───────────────────────────────────────{Style.RESET_ALL}")
                             continue
                     
-                    # Подтверждение удаления
+                    
                     size_kb = backup_to_delete['size'] / 1024
                     print(f"\n{Fore.CYAN}📊 Информация о копии:{Style.RESET_ALL}")
                     print(f"{Fore.GREEN}Файл:{Style.RESET_ALL} {backup_to_delete['name']}")
@@ -611,7 +611,7 @@ def create_backup(password_file: Path, backup_dir: Path):
                     input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
                     
                 elif action_choice == "1":
-                    # Создание новой копии
+                    
                     original_size = password_file.stat().st_size
                     size_kb = original_size / 1024
                     
@@ -628,12 +628,12 @@ def create_backup(password_file: Path, backup_dir: Path):
                         confirm = input(f"\n{Fore.CYAN}Подтвердите создание копии (0-1): {Style.RESET_ALL}").strip()
                         
                         if confirm == "1":
-                            # Создаем имя для резервной копии с timestamp
+                            
                             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                             backup_filename = f"urpasswordswishi_backup_{timestamp}.txt"
                             backup_path = backup_dir / backup_filename
                             
-                            # Копируем файл
+                            
                             shutil.copy2(password_file, backup_path)
                             
                             print(f"\n{Fore.GREEN}✅ Резервная копия создана успешно!{Style.RESET_ALL}")
@@ -641,7 +641,7 @@ def create_backup(password_file: Path, backup_dir: Path):
                             print(f"{Fore.CYAN}💾 Резервная копия: {Style.RESET_ALL}{backup_path}")
                             print(f"{Fore.CYAN}📊 Размер копии: {Style.RESET_ALL}{Fore.GREEN}{size_kb:.1f} KB{Style.RESET_ALL}")
                             
-                            # Обновляем список бэкапов
+                            
                             backup_files = []
                             for f in backup_dir.iterdir():
                                 if f.is_file():
@@ -664,18 +664,18 @@ def create_backup(password_file: Path, backup_dir: Path):
                     input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
             
                 else:
-                    # Отмена - очищаем консоль и выходим из функции
+                    
                     print(f"{Fore.YELLOW}❌ Операция отменена{Style.RESET_ALL}")
                     input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
                     return
                 
             except Exception:
-                # При прерывании тоже очищаем консоль и выходим
+                
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print(f"{Fore.YELLOW}❌ Операция отменена{Style.RESET_ALL}")
                 return
             
-            # Очищаем консоль для следующей итерации
+            
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"\n{Fore.CYAN}💾 Создание резервной копии{Style.RESET_ALL}")
             print(f"{Fore.MAGENTA}───────────────────────────────────────{Style.RESET_ALL}")
@@ -702,11 +702,11 @@ def delete_all_passwords(password_file: Path, backup_dir: Path):
         return
     
     try:
-        # Сначала читаем файл чтобы показать статистику
+        
         with open(password_file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
         
-        # Считаем количество непустых строк (записей)
+        
         non_empty_lines = [line.strip() for line in lines if line.strip()]
         total_records = len(non_empty_lines)
         
@@ -715,13 +715,13 @@ def delete_all_passwords(password_file: Path, backup_dir: Path):
             input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
             return
         
-        # Показываем статистику
+        
         print(f"{Fore.RED}⚠️ ВНИМАНИЕ: Это действие необратимо!{Style.RESET_ALL}")
         print(f"\n{Fore.YELLOW}📊 Статистика файла:{Style.RESET_ALL}")
         print(f"   Всего записей: {total_records}")
         print(f"   Размер файла: {password_file.stat().st_size} байт")
         
-        # Показываем примеры записей
+        
         print(f"\n{Fore.CYAN}📋 Примеры записей (первые 3):{Style.RESET_ALL}")
         for i in range(min(3, total_records)):
             line = non_empty_lines[i]
@@ -732,7 +732,7 @@ def delete_all_passwords(password_file: Path, backup_dir: Path):
                 date_str = match.group(3).strip()[:10]
                 print(f"   {Fore.CYAN}{i+1}.{Style.RESET_ALL} pass: {password} | note: {note} | date: {date_str}")
         
-        # Запрос резервной копии
+        
         print(f"\n{Fore.CYAN}💾 Создать резервную копию перед удалением?{Style.RESET_ALL}")
         print(f"{Fore.YELLOW}1{Style.RESET_ALL} - Да, создать резервную копию")
         print(f"{Fore.YELLOW}2{Style.RESET_ALL} - Нет, продолжить без резервной копии")
@@ -754,7 +754,7 @@ def delete_all_passwords(password_file: Path, backup_dir: Path):
             shutil.copy2(password_file, backup_path)
             print(f"{Fore.GREEN}✅ Создана резервная копия: {backup_filename}{Style.RESET_ALL}")
         
-        # Финальное подтверждение
+        
         print(f"\n{Fore.RED}🚨 ОПАСНОЕ ДЕЙСТВИЕ!{Style.RESET_ALL}")
         print(f"{Fore.RED}Вы собираетесь удалить ВСЕ {total_records} записей!{Style.RESET_ALL}")
         print(f"\n{Fore.CYAN}Для подтверждения введите '{Fore.RED}УДАЛИТЬ ВСЕ{Fore.CYAN}':{Style.RESET_ALL}")
@@ -766,11 +766,11 @@ def delete_all_passwords(password_file: Path, backup_dir: Path):
             input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
             return
         
-        # Выполнение удаления
-        with open(password_file, 'w', encoding='utf-8') as f:
-            f.write("")  # Очищаем файл
         
-        # Проверяем результат
+        with open(password_file, 'w', encoding='utf-8') as f:
+            f.write("")  
+        
+        
         new_size = password_file.stat().st_size
         
         print(f"\n{Fore.GREEN}✅ Все пароли успешно удалены!{Style.RESET_ALL}")
@@ -785,7 +785,7 @@ def delete_all_passwords(password_file: Path, backup_dir: Path):
         
     except Exception as e:
         print(f"{Fore.RED}❌ Ошибка при удалении паролей: {e}{Style.RESET_ALL}")
-        # Пытаемся восстановить из резервной копии если была создана
+        
         if backup_path and backup_path.exists():
             try:
                 shutil.copy2(backup_path, password_file)
@@ -813,7 +813,7 @@ def remove_or_replace_duplicates(password_file: Path, backup_dir: Path):
         return
     
     try:
-        # Читаем и парсим файл
+        
         with open(password_file, 'r', encoding='utf-8') as f:
             lines = [line.strip() for line in f.readlines() if line.strip()]
         
@@ -833,7 +833,7 @@ def remove_or_replace_duplicates(password_file: Path, backup_dir: Path):
             input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
             return
         
-        # Поиск дубликатов
+        
         password_count = {}
         for entry in password_entries:
             password = entry['password']
@@ -846,7 +846,7 @@ def remove_or_replace_duplicates(password_file: Path, backup_dir: Path):
             input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
             return
         
-        # Показ найденных дубликатов
+        
         print(f"{Fore.YELLOW}🔍 Найдено {len(duplicates)} повторяющихся паролей:{Style.RESET_ALL}\n")
         
         for i, (password, count) in enumerate(duplicates.items(), 1):
@@ -857,7 +857,7 @@ def remove_or_replace_duplicates(password_file: Path, backup_dir: Path):
                 print(f"   {j}. Заметка: '{entry['note']}' | Дата: {date_short}")
             print()
         
-        # Выбор действия
+        
         print(f"{Fore.CYAN}Выберите действие:{Style.RESET_ALL}")
         print(f"{Fore.YELLOW}1{Style.RESET_ALL} - Удалить дубликаты (оставить первую запись)")
         print(f"{Fore.YELLOW}2{Style.RESET_ALL} - Заменить дубликаты (изменить пароли)")
@@ -894,7 +894,7 @@ def remove_duplicates(password_file: Path, backup_dir: Path, password_entries: l
     print(f"\n{Fore.CYAN}🗑️ Удаление дубликатов{Style.RESET_ALL}")
     print(f"{Fore.MAGENTA}──────────────────────────{Style.RESET_ALL}")
     
-    # Определяем записи для сохранения (первые вхождения каждого пароля)
+    
     entries_to_keep = []
     seen_passwords = set()
     
@@ -909,13 +909,13 @@ def remove_duplicates(password_file: Path, backup_dir: Path, password_entries: l
         print(f"{Fore.YELLOW}⚠️ Нечего удалять{Style.RESET_ALL}")
         return
     
-    # Показ статистики
+    
     print(f"{Fore.YELLOW}📊 Статистика удаления:{Style.RESET_ALL}")
     print(f"   Всего записей: {len(password_entries)}")
     print(f"   Будет удалено: {entries_to_remove}")
     print(f"   Останется: {len(entries_to_keep)}")
     
-    # Запрос резервной копии
+    
     print(f"\n{Fore.CYAN}💾 Создать резервную копию?{Style.RESET_ALL}")
     print(f"{Fore.YELLOW}1{Style.RESET_ALL} - Да, создать резервную копию")
     print(f"{Fore.YELLOW}2{Style.RESET_ALL} - Нет, продолжить без резервной копии")
@@ -931,7 +931,7 @@ def remove_duplicates(password_file: Path, backup_dir: Path, password_entries: l
         shutil.copy2(password_file, backup_path)
         print(f"{Fore.GREEN}✅ Создана резервная копия{Style.RESET_ALL}")
     
-    # Подтверждение
+    
     print(f"\n{Fore.RED}⚠️ Подтвердите удаление{Style.RESET_ALL}")
     print(f"{Fore.YELLOW}1{Style.RESET_ALL} - Удалить дубликаты")
     print(f"{Fore.YELLOW}2{Style.RESET_ALL} - Отмена")
@@ -942,7 +942,7 @@ def remove_duplicates(password_file: Path, backup_dir: Path, password_entries: l
         print(f"{Fore.YELLOW}❌ Удаление отменено{Style.RESET_ALL}")
         return
     
-    # Выполнение удаления
+    
     try:
         with open(password_file, 'w', encoding='utf-8') as f:
             for entry in entries_to_keep:
@@ -952,7 +952,7 @@ def remove_duplicates(password_file: Path, backup_dir: Path, password_entries: l
         print(f"{Fore.CYAN}📊 Осталось записей: {len(entries_to_keep)}{Style.RESET_ALL}")
         
     except Exception as e:
-        # Восстановление из резервной копии при ошибке
+        
         if backup_path and backup_path.exists():
             shutil.copy2(backup_path, password_file)
             print(f"{Fore.RED}❌ Ошибка! Файл восстановлен из резервной копии{Style.RESET_ALL}")
@@ -973,7 +973,7 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
     print(f"\n{Fore.CYAN}🔄 Замена дубликатов{Style.RESET_ALL}")
     print(f"{Fore.MAGENTA}─────────────────────────{Style.RESET_ALL}")
     
-    # Запрос резервной копии
+    
     print(f"{Fore.CYAN}💾 Создать резервную копию?{Style.RESET_ALL}")
     print(f"{Fore.YELLOW}1{Style.RESET_ALL} - Да, создать резервную копию")
     print(f"{Fore.YELLOW}2{Style.RESET_ALL} - Нет, продолжить без резервной копии")
@@ -993,7 +993,7 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
     replaced_count = 0
     save_and_exit = False
     
-    # Обработка каждого дублирующегося пароля
+    
     for password in duplicates:
         if save_and_exit:
             break
@@ -1006,12 +1006,12 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
         print(f"\n{Fore.CYAN}🔄 Обработка пароля: '{password}'{Style.RESET_ALL}")
         print(f"{Fore.YELLOW}Найдено {len(entries)} записей:{Style.RESET_ALL}")
         
-        # Показ всех записей с этим паролем
+        
         for i, entry in enumerate(entries, 1):
             date_short = entry['date'][:10]
             print(f"   {i}. Заметка: '{entry['note']}' | Дата: {date_short}")
         
-        # Обработка каждой записи
+        
         for i, entry in enumerate(entries):
             if save_and_exit:
                 break
@@ -1030,7 +1030,7 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
             
             if choice == "0":
                 print(f"{Fore.YELLOW}❌ Замена прервана{Style.RESET_ALL}")
-                # Восстанавливаем исходный файл если была создана резервная копия
+                
                 if backup_path and backup_path.exists():
                     shutil.copy2(backup_path, password_file)
                     print(f"{Fore.GREEN}✅ Все изменения отменены, файл восстановлен{Style.RESET_ALL}")
@@ -1043,11 +1043,11 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
                         print(f"{Fore.RED}❌ Пароль не может быть пустым{Style.RESET_ALL}")
                         continue
                     
-                    # Быстрая проверка надежности пароля
+                    
                     strength, color = get_password_strength_fast(new_password)
                     print(f"{color}✓ Надежность пароля: {strength}{Style.RESET_ALL}")
                     
-                    # Если пароль слабый, предлагаем выбор
+                    
                     if strength == "слабый":
                         print(f"{Fore.RED}⚠️  Этот пароль легко взломать!{Style.RESET_ALL}")
                         print(f"{Fore.CYAN}Что делать с этим паролем?{Style.RESET_ALL}")
@@ -1056,11 +1056,11 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
                         
                         use_weak = input(f"{Fore.CYAN}Выберите (1-2): {Style.RESET_ALL}").strip()
                         if use_weak != '1':
-                            continue  # Повторяем ввод пароля
+                            continue  
                     
-                    break  # Выходим из цикла ввода пароля
+                    break  
                 
-                # Опция изменения заметки
+                
                 print(f"{Fore.YELLOW}Текущая заметка: '{entry['note']}'{Style.RESET_ALL}")
                 print(f"{Fore.CYAN}Изменить заметку?{Style.RESET_ALL}")
                 print(f"{Fore.YELLOW}1{Style.RESET_ALL} - Да, изменить заметку")
@@ -1073,7 +1073,7 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
                     if new_note:
                         entry['note'] = new_note
                 
-                # Обновление записи
+                
                 entry['password'] = new_password
                 entry['date'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 replaced_count += 1
@@ -1088,7 +1088,7 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
             else:
                 print(f"{Fore.RED}❌ Неверный выбор{Style.RESET_ALL}")
     
-    # Сохранение изменений
+    
     try:
         with open(password_file, 'w', encoding='utf-8') as f:
             for entry in updated_entries:
@@ -1102,7 +1102,7 @@ def replace_duplicates(password_file: Path, backup_dir: Path, password_entries: 
         print(f"{Fore.CYAN}📊 Заменено паролей: {replaced_count}{Style.RESET_ALL}")
         
     except Exception as e:
-        # Восстановление из резервной копии при ошибке
+        
         if backup_path and backup_path.exists():
             shutil.copy2(backup_path, password_file)
             print(f"{Fore.RED}❌ Ошибка! Файл восстановлен из резервной копии{Style.RESET_ALL}")

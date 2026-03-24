@@ -8,17 +8,17 @@ import os
 from pathlib import Path
 from colorama import Fore, Style, init
 
-# Инициализация colorama
+
 init()
 
-# Добавляем текущую директорию в путь для импорта модулей
+
 sys.path.insert(0, str(Path(__file__).parent))
 
-# Импортируем наши модули
+
 from password_utils import PasswordCheck, get_password_strength_fast, generate_single_password
 from passmanager import password_management_main
 
-# Определяем структуру путей проекта
+
 BASE_DIR = Path(__file__).parent
 DATA_DIR = BASE_DIR / "data"
 PASSWORDS_FILE = DATA_DIR / "urpasswordswishi.txt"
@@ -36,15 +36,15 @@ def menushow():
     """Отображение главного меню"""
     menu = f"""
 {Fore.MAGENTA}+----------------------------------------+
-{Fore.MAGENTA}|           {Fore.GREEN}PASSWORD MANAGER{Fore.MAGENTA}             |
-{Fore.MAGENTA}|           {Fore.GREEN}(by wishis team){Fore.MAGENTA}             |
+{Fore.MAGENTA}|            {Fore.GREEN}PASSWORD MANAGER{Fore.MAGENTA}            |
+{Fore.MAGENTA}|           {Fore.GREEN}(project_password){Fore.MAGENTA}           |
 {Fore.MAGENTA}+----------------------------------------+
 {Fore.MAGENTA}| {Fore.YELLOW}1.{Fore.WHITE} Проверить надежность пароля       {Fore.MAGENTA}  |
 {Fore.MAGENTA}| {Fore.YELLOW}2.{Fore.WHITE} Создать надежный пароль           {Fore.MAGENTA}  |
 {Fore.MAGENTA}| {Fore.YELLOW}3.{Fore.WHITE} Управление сохраненными паролями  {Fore.MAGENTA}  |
 {Fore.MAGENTA}| {Fore.YELLOW}4.{Fore.WHITE} Советы по безопасности            {Fore.MAGENTA}  |
 {Fore.MAGENTA}| {Fore.YELLOW}5.{Fore.WHITE} Информация о программе            {Fore.MAGENTA}  |
-{Fore.MAGENTA}| {Fore.YELLOW}6.{Fore.WHITE} Выход                              {Fore.MAGENTA} |
+{Fore.MAGENTA}| {Fore.YELLOW}0.{Fore.WHITE} Выход                              {Fore.MAGENTA} |
 {Fore.MAGENTA}+----------------------------------------+
 {Style.RESET_ALL}"""
     print(menu)
@@ -94,7 +94,7 @@ def generate_secure_password():
     print(f"\n{Fore.MAGENTA}🔐 ГЕНЕРАТОР ПАРОЛЕЙ{Style.RESET_ALL}")
     print(f"{Fore.WHITE}─" * 40)
     
-    # Валидация длины пароля
+    
     while True:
         length_input = input(f"{Fore.CYAN}Введите длину пароля (по умолчанию 12): {Style.RESET_ALL}").strip()
         
@@ -113,7 +113,7 @@ def generate_secure_password():
         except ValueError:
             print(f"{Fore.RED}⚠️ Ошибка: введите корректное число!{Style.RESET_ALL}")
 
-    # Валидация количества паролей
+    
     while True:
         count_input = input(f"{Fore.CYAN}Сколько паролей сгенерировать (по умолчанию 1): {Style.RESET_ALL}").strip()
         
@@ -132,30 +132,30 @@ def generate_secure_password():
         except ValueError:
             print(f"{Fore.RED}⚠️ Ошибка: введите корректное число!{Style.RESET_ALL}")
 
-    # Уведомление о начале генерации
+    
     if count == 1:
         print(f"{Fore.YELLOW}🔄 Начинаю генерацию и автопроверку пароля...{Style.RESET_ALL}")
     else:
         print(f"{Fore.YELLOW}🔄 Начинаю генерацию и автопроверку {count} паролей...{Style.RESET_ALL}")
 
-    # Создаем один экземпляр PasswordCheck для всех проверок
+    
     check = PasswordCheck(ROCKYOU_FILE)
     
-    # Быстрая генерация паролей
+    
     generated_passwords = []
     for i in range(count):
         password = generate_single_password(length)
         strength, color = get_password_strength_fast(password)
         generated_passwords.append((password, strength, color))
     
-    # Вывод всех сгенерированных паролей
+    
     print(f"\n{Fore.GREEN}✅ СГЕНЕРИРОВАННЫЕ ПАРОЛИ:{Style.RESET_ALL}")
     print(f"{Fore.WHITE}─" * 40)
     
     for i, (password, strength, color) in enumerate(generated_passwords, 1):
         print(f"{Fore.WHITE}{i}. {password} {color}({strength}){Style.RESET_ALL}")
     
-    # Предложение сохранить пароли
+    
     print(f"\n{Fore.CYAN}💾 СОХРАНЕНИЕ ПАРОЛЕЙ:{Style.RESET_ALL}")
     print(f"{Fore.WHITE}─" * 40)
     print(f"{Fore.YELLOW}Хотите сохранить какие-либо пароли?{Style.RESET_ALL}")
@@ -167,7 +167,7 @@ def generate_secure_password():
     save_choice = input(f"{Fore.CYAN}Ваш выбор: {Style.RESET_ALL}").strip()
     
     if save_choice == "1":
-        # Сохранение одного пароля
+        
         try:
             pwd_num = int(input(f"{Fore.CYAN}Введите номер пароля для сохранения: {Style.RESET_ALL}").strip())
             if 1 <= pwd_num <= len(generated_passwords):
@@ -182,7 +182,7 @@ def generate_secure_password():
             print(f"{Fore.RED}Ошибка: введите корректный номер!{Style.RESET_ALL}")
             
     elif save_choice == "2":
-        # Сохранение нескольких паролей
+        
         try:
             pwd_nums = input(f"{Fore.CYAN}Введите номера паролей для сохранения через пробел: {Style.RESET_ALL}").strip()
             if pwd_nums:
@@ -205,7 +205,7 @@ def generate_secure_password():
             print(f"{Fore.RED}Ошибка: введите корректные номера!{Style.RESET_ALL}")
     
     elif save_choice == "3":
-        # Сохранение всех паролей
+        
         print(f"\n{Fore.CYAN}💾 СОХРАНЕНИЕ ВСЕХ ПАРОЛЕЙ:{Style.RESET_ALL}")
         print(f"{Fore.WHITE}─" * 40)
         print(f"{Fore.YELLOW}Выберите способ сохранения:{Style.RESET_ALL}")
@@ -215,7 +215,7 @@ def generate_secure_password():
         method_choice = input(f"{Fore.CYAN}Ваш выбор: {Style.RESET_ALL}").strip()
         
         if method_choice == "1":
-            # Одна подсказка для всех паролей
+            
             common_note = input(f"{Fore.CYAN}Введите общую подсказку для всех паролей: {Style.RESET_ALL}").strip()
             if not common_note:
                 common_note = "без подсказки"
@@ -226,7 +226,7 @@ def generate_secure_password():
             print(f"{Fore.GREEN}✅ Все {len(generated_passwords)} паролей сохранены с общей подсказкой: '{common_note}'{Style.RESET_ALL}")
             
         elif method_choice == "2":
-            # Индивидуальные подсказки для каждого пароля
+            
             for i, (password, strength, color) in enumerate(generated_passwords, 1):
                 print(f"\n{Fore.CYAN}Пароль {i}: {password}{Style.RESET_ALL}")
                 note = input(f"{Fore.CYAN}Введите подсказку для этого пароля: {Style.RESET_ALL}").strip()
@@ -259,14 +259,14 @@ def passcheck():
         if not userpassword:
             break
         
-        print()  # Пустая строка для разделения
+        print()  
         
-        # Сначала проверяем на простой пароль
+        
         if check.rockupasscheck(userpassword):
             print(f"{Fore.RED}❌ Пароль слишком простой!{Style.RESET_ALL}")
             print(f"{Fore.RED}❌ Использование такого пароля крайне небезопасно!{Style.RESET_ALL}")
         else:
-            # Если пароль не найден в базе, проводим полную проверку
+            
             status = check.passsafecheck(userpassword)
             
             print(f"{Fore.WHITE}─" * 40)
@@ -276,7 +276,7 @@ def passcheck():
                 print(f"{Fore.GREEN}✅ Ваш пароль надежный!{Style.RESET_ALL}")
                 print(f"{Fore.GREEN}💪 Взлом такого пароля затруднен{Style.RESET_ALL}")
                 
-                # Предлагаем сохранить надежный пароль
+                
                 ask_to_save_password(userpassword)
                 
             elif status == "средний":
@@ -312,28 +312,15 @@ def show_program_info():
     print(f"\n{Fore.CYAN}ℹ️ ИНФОРМАЦИЯ О ПРОГРАММЕ{Style.RESET_ALL}")
     print(f"{Fore.MAGENTA}────────────────────────────────────────{Style.RESET_ALL}")
     print(f"{Fore.GREEN}Название:{Style.RESET_ALL} Password Manager")
-    print(f"{Fore.GREEN}Версия:{Style.RESET_ALL} 2.0")
-    print(f"{Fore.GREEN}Разработчик:{Style.RESET_ALL} Wishis Team")
+    print(f"{Fore.GREEN}Статус:{Style.RESET_ALL} Итоговый проект учащихся 10 класса")
+    print(f"{Fore.GREEN}Разработчики:{Style.RESET_ALL} Панарин К., Курбонова С.")
     print(f"{Fore.GREEN}Назначение:{Style.RESET_ALL} Управление и генерация безопасных паролей")
-    print(f"{Fore.GREEN}Особенности:{Style.RESET_ALL}")
-    print(f"  • Проверка надежности паролей по энтропии")
-    print(f"  • Проверка паролей в базе уязвимых паролей (rockyou)")
-    print(f"  • Генерация криптостойких паролей")
-    print(f"  • Хранение паролей с возможностью поиска")
-    print(f"  • Резервное копирование и восстановление")
-    print(f"\n{Fore.CYAN}📁 Структура проекта:{Style.RESET_ALL}")
-    print(f"  • {Fore.GREEN}main.py{Style.RESET_ALL} - Главный модуль")
-    print(f"  • {Fore.GREEN}passmanager.py{Style.RESET_ALL} - Управление паролями")
-    print(f"  • {Fore.GREEN}password_utils.py{Style.RESET_ALL} - Общие утилиты")
-    print(f"  • {Fore.GREEN}data/{Style.RESET_ALL} - Папка с файлами данных")
-    print(f"  • {Fore.GREEN}backups/{Style.RESET_ALL} - Папка с резервными копиями")
     print(f"{Fore.MAGENTA}────────────────────────────────────────{Style.RESET_ALL}")
     input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
-
-
+    
 def main():
     """Главная функция программы"""
-    # Создаем необходимые директории
+    
     ensure_data_directories()
     
     while True:
@@ -361,11 +348,11 @@ def main():
         elif choice == "5":
             os.system('cls' if os.name == 'nt' else 'clear')
             show_program_info()
-        elif choice == "6":
+        elif choice == "0":
             print(f"{Fore.GREEN}See u later! {Style.RESET_ALL}")
             break
         else:
-            print(f"{Fore.RED}Ошибка: выберите пункт от 1 до 6!{Style.RESET_ALL}")
+            print(f"{Fore.RED}Ошибка: выберите верный пункт!{Style.RESET_ALL}")
             input(f"{Fore.YELLOW}Нажмите Enter для продолжения...{Style.RESET_ALL}")
 
 
