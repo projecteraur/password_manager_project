@@ -21,7 +21,7 @@ from passmanager import password_management_main
 
 BASE_DIR = Path(__file__).parent
 DATA_DIR = BASE_DIR / "data"
-PASSWORDS_FILE = DATA_DIR / "urpasswordswishi.txt"
+PASSWORDS_FILE = DATA_DIR / "ur_password_project_pass.txt"
 ROCKYOU_FILE = DATA_DIR / "rockyou_simpl_passw.txt"
 BACKUP_DIR = BASE_DIR / "backups"
 
